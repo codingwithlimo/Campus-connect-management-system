@@ -1,0 +1,33 @@
+from fastapi import HTTPException
+
+
+users = {
+    "admin@example.com": {
+        "password": "admin123",
+        "role": "admin"
+    }
+}
+
+
+def authenticate_user(
+    email: str,
+    password: str
+):
+
+    user = users.get(email)
+
+    if not user:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
+
+    if user["password"] != password:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
+
+    return user
