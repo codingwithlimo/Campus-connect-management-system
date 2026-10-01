@@ -1,0 +1,34 @@
+from datetime import datetime
+
+
+notifications = []
+
+
+def create_notification(
+    student_id: int,
+    message: str
+):
+
+    notification = {
+
+        "student_id": student_id,
+
+        "message": message,
+
+        "created_at": datetime.utcnow(),
+
+        "read": False
+    }
+
+    notifications.append(notification)
+
+    return notification
+
+
+def get_student_notifications(student_id: int):
+
+    return [
+        notification
+        for notification in notifications
+        if notification["student_id"] == student_id
+    ]
