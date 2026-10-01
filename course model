@@ -1,0 +1,11 @@
+from pydantic import BaseModel
+from typing import Optional
+
+
+class Course(BaseModel):
+
+    id: Optional[int] = None
+    code: str
+    name: str
+    lecturer: str
+    capacity: int
