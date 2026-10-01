@@ -1,0 +1,39 @@
+from pydantic import BaseModel
+from datetime import date
+
+
+class Attendance(BaseModel):
+
+    student_id: int
+    course_id: int
+    attendance_date: date
+    present: bool
+from fastapi import APIRouter
+
+from app.models.attendance import Attendance
+
+
+router = APIRouter(
+    prefix="/attendance",
+    tags=["Attendance"]
+)
+
+
+attendance_records = []
+
+
+@router.post("/")
+def record_attendance(record: Attendance):
+
+    attendance_records.append(record)
+
+    return {
+        "message": "Attendance recorded",
+        "record": record
+    }
+
+
+@router.get("/")
+def get_attendance():
+
+    return attendance_records
