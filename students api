@@ -1,0 +1,32 @@
+from fastapi import APIRouter
+
+from app.models.student import Student
+from app.services.student_service import (
+    register_student,
+    get_students,
+    get_student
+)
+
+
+router = APIRouter(
+    prefix="/students",
+    tags=["Students"]
+)
+
+
+@router.post("/")
+def create_student(student: Student):
+
+    return register_student(student)
+
+
+@router.get("/")
+def list_students():
+
+    return get_students()
+
+
+@router.get("/{student_id}")
+def find_student(student_id: int):
+
+    return get_student(student_id)
