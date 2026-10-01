@@ -1,0 +1,37 @@
+from fastapi import APIRouter
+
+from app.models.attendance import Attendance
+
+from app.services.notification_service import (
+    create_notification
+)
+
+
+router = APIRouter(
+    prefix="/attendance",
+    tags=["Attendance"]
+)
+
+
+attendance_records = []
+
+
+@router.post("/")
+def record_attendance(record: Attendance):
+
+    attendance_records.append(record)
+
+    if not record.present:
+
+        create_notification(
+            student_id=record.student_id,
+            message=(
+                "You were marked absent "
+                f"for course {record.course_id}."
+            )
+        )
+
+    return {
+        "message": "Attendance recorded",
+        "record": record
+    }
